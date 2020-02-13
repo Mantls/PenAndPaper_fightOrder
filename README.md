@@ -1,2 +1,4 @@
 # PenAndPaper_fightOrder
-A Tool to determine whose turn it is in turn-based Pen&amp;Paper fights
+A small Tool to determine whose turn it is in turn-based Pen&amp;Paper fights
+
+Usage: python fightOrder.py [-w]
