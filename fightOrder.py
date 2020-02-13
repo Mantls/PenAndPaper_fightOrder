@@ -30,14 +30,12 @@ class Game():
             with open((os.path.dirname(os.path.abspath(__file__)) + "/.warmstartConfig"),"r") as f:
                 for line in f:
                     if not line.rstrip() == "":
-                        print("reading line")
-                        print(line)
                         split = line.rstrip().split(",")
-                        print(split)
                         actor = split[0]
                         val = int (split[1])
                         self.actors[actor] = val
-        
+            print("Loaded WarmstartConfig with the following actors!\n")
+            self.showStats()
         except Exception as e:
             print(e)
 
@@ -181,7 +179,9 @@ class Game():
 game = Game()
 game.running = True
 try: 
-    game.readWarmStart()
+    if sys.argv[1] == "-w":
+        print ("Reading /.warmstartConfig")
+        game.readWarmStart()
     game.run()
 except KeyboardInterrupt:
     print("\nPerforming shutdown")
