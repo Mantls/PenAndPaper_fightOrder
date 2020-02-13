@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import sys
+import os
 
 
 class Game():
@@ -13,6 +14,33 @@ class Game():
         self.changed = False
 
         self.round = 0
+
+    def prepareWarmstart(self):
+        dirname = os.path.dirname(os.path.abspath(__file__))
+        print ("Writing warmstart config to: {}".format(dirname + "/.warmstartConfig"))
+        with open(dirname + "/.warmstartConfig","w") as f:
+            string = ""
+            for actor in self.actors:
+                val = self.actors[actor]
+                string += "{},{}\n".format(actor, val)
+            f.write(string)
+
+    def readWarmStart(self):
+        try:
+            with open((os.path.dirname(os.path.abspath(__file__)) + "/.warmstartConfig"),"r") as f:
+                for line in f:
+                    if not line.rstrip() == "":
+                        print("reading line")
+                        print(line)
+                        split = line.rstrip().split(",")
+                        print(split)
+                        actor = split[0]
+                        val = int (split[1])
+                        self.actors[actor] = val
+        
+        except Exception as e:
+            print(e)
+
 
     def formatNames(self, names):
 
@@ -64,8 +92,13 @@ class Game():
     def addActor(self):
         inp = input("Enter name of new actor! Leave blank to abort.\n")
 
+        
         if inp.lstrip() == "":
             return
+        
+        if inp in self.actors:
+            print("{} is alread an actor! Try again!".format(inp))
+            self.addActor()
         else:
             name = inp
             value = self.inputInteger("Enter initiative of {}\n".format(name))
@@ -148,7 +181,9 @@ class Game():
 game = Game()
 game.running = True
 try: 
+    game.readWarmStart()
     game.run()
 except KeyboardInterrupt:
     print("\nPerforming shutdown")
+    game.prepareWarmstart()
     print("Goodbye!")
