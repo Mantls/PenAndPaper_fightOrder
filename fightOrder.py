@@ -157,6 +157,7 @@ class Game():
 
     def run(self):
         while self.running:
+            print("---------------------------------------------\n")
             inp = input("At Round {}\n\nIt's {}'s Turn\n\n\nWhat do you want to do?\n\n 1.) To continue enter N\n 2.) To change stats enter C\n 3.) To remove someone enter R\n 4.) To add someone enter A\n 5.) To show the stats enter S   \n\n 6.) to reset the game enter RESET\n\n\n\n ".format(
                 self.round, self.formatNames(self.acting)))
 
