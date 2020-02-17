@@ -180,9 +180,13 @@ class Game():
 game = Game()
 game.running = True
 try: 
-    if len (sys.argv) > 1  and sys.argv[1] == "-w":
-        print ("Reading /.warmstartConfig")
-        game.readWarmStart()
+    if len (sys.argv) > 1:
+        if sys.argv[1] == "-w":
+            print ("Reading /.warmstartConfig")
+            game.readWarmStart()
+        else:
+            print("Unrecognized flag\nperforming shutdown")
+            sys.exit()
     game.run()
 except KeyboardInterrupt:
     print("\nPerforming orderly shutdown")
